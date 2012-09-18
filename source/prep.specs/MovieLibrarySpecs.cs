@@ -232,8 +232,7 @@ namespace prep.specs
 
       It should_be_able_to_find_all_movies_published_after_a_certain_year = () =>
       {
-        var criteria = Where<Movie>.has_a(x => x.date_published)
-          .greater_than(2004);
+        var criteria = Where<Movie>.has_a(x => x.date_published).greater_than(2004);
 
         var results = sut.all_movies().all_items_matching(criteria);
 
@@ -242,8 +241,10 @@ namespace prep.specs
 
       It should_be_able_to_find_all_movies_published_between_a_certain_range_of_years = () =>
       {
-        var results = sut.all_movies().where(x => x.date_published)
-          .between(1982,2003);
+          //var criteria = Where<Movie>.has_a(x => x.date_published)
+          //  .between(1982, 2003);
+
+        var results = sut.all_movies().where(x => x.date_published).between(1982,2003);
 
         results.ShouldContainOnly(indiana_jones_and_the_temple_of_doom, a_bugs_life, pirates_of_the_carribean);
       };

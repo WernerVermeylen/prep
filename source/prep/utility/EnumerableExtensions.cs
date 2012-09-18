@@ -10,18 +10,22 @@ namespace prep.utility
         yield return item;
     }
 
-    public static IEnumerable<ItemToFilter> all_items_matching<ItemToFilter>(this IEnumerable<ItemToFilter> items,
-                                                                             IMatchAn<ItemToFilter> specification)
+    public static IEnumerable<ItemToFilter> all_items_matching<ItemToFilter>(this IEnumerable<ItemToFilter> items, IMatchAn<ItemToFilter> specification)
     {
       return items.all_items_matching(specification.matches);
     }
 
-    static IEnumerable<ItemToFilter> all_items_matching<ItemToFilter>(this IEnumerable<ItemToFilter> items,
-                                                                             Condition<ItemToFilter> filter)
+    static IEnumerable<ItemToFilter> all_items_matching<ItemToFilter>(this IEnumerable<ItemToFilter> items, Condition<ItemToFilter> filter)
     {
       foreach (var item in items)
         if (filter(item))
           yield return item;
     }
+
+    public static MatchCreationExtensionPoint<ItemToFilter, PropertyType> where<ItemToFilter, PropertyType>(this IEnumerable<ItemToFilter> items, PropertyAccessor<ItemToFilter, PropertyType> accessor)
+    {
+        return Where<ItemToFilter>.has_a(items, accessor);
+    }
+
   }
 }
